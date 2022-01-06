@@ -41,6 +41,8 @@ export default function App() {
 		phone: '',
 		message: '',
 		file: '',
+		postal: '',
+		cpf: '',
 		saved: 'my app v10.00',
 
 		checked: true,
@@ -101,6 +103,7 @@ export default function App() {
 					<CheckInputGroup
 						label='Agree'
 						name='checked'
+						error='Required'
 						value={form.checked}
 						handleInputForm={handleInputForm}
 					/>
@@ -111,6 +114,7 @@ export default function App() {
 					<RadioInputGroup
 						label='Female'
 						name='F'
+						error='Required'
 						group='genre'
 						value={form.genre}
 						handleInputForm={handleInputForm}
@@ -119,6 +123,7 @@ export default function App() {
 						label='Male'
 						name='M'
 						group='genre'
+						error='Required'
 						value={form.genre}
 						handleInputForm={handleInputForm}
 					/>
@@ -129,6 +134,7 @@ export default function App() {
 						value={form.mySwitch}
 						label='Switch'
 						name='mySwitch'
+						error='Required'
 						handleInputForm={handleInputForm}
 					/>
 				</View>
@@ -138,6 +144,7 @@ export default function App() {
 						label='Nome'
 						placeholder='Ex.: Carl John'
 						name='name'
+						error='Required'
 						handleInputForm={handleInputForm}
 						keyboardType='default'
 						value={form.name}
@@ -147,6 +154,7 @@ export default function App() {
 						label='E-mail'
 						placeholder='Ex.: my@email.com'
 						name='email'
+						error='Required'
 						handleInputForm={handleInputForm}
 						keyboardType='email-address'
 						autoCapitalize='none'
@@ -156,6 +164,7 @@ export default function App() {
 					<TextInputGroup
 						label='Senha'
 						name='password'
+						error='Required'
 						placeholder='******'
 						secureTextEntry={true}
 						handleInputForm={handleInputForm}
@@ -170,18 +179,45 @@ export default function App() {
 
 					<TextInputGroup
 						label='Phone'
+						mask='PHONE'
+						error='Required'
 						placeholder='(00) 0000-0000'
 						handleInputForm={handleInputForm}
 						keyboardType='numeric'
-						maxLength={12}
+						maxLength={15}
 						name='phone'
 						value={form.phone}
+					/>
+
+					<TextInputGroup
+						label='Cep'
+						mask='CEP'
+						error='Required'
+						placeholder='00000-000'
+						handleInputForm={handleInputForm}
+						keyboardType='numeric'
+						maxLength={9}
+						name='postal'
+						value={form.postal}
+					/>
+
+					<TextInputGroup
+						label='Cpf'
+						mask='CPF'
+						error='Required'
+						placeholder='000.000.000-00'
+						handleInputForm={handleInputForm}
+						keyboardType='numeric'
+						maxLength={14}
+						name='cpf'
+						value={form.cpf}
 					/>
 
 					<TextareaInputGroup
 						label='Mensagem'
 						placeholder='This is...'
 						name='message'
+						error='Required'
 						multiline={true}
 						handleInputForm={handleInputForm}
 						keyboardType='default'

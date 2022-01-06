@@ -29,31 +29,39 @@ FileInputGroup: input file to access Gallery / Camera
 
 
 */
-export const FileInputGroup = ({ style, ...props }) => {
-	const { inputLabel, value } = props;
-	return (
-		<View>
-			{inputLabel && <Text style={customStyles.label}>{inputLabel}</Text>}
-			<Text style={[customStyles.inputTextRead, style]} {...props}>
-				{value}
-			</Text>
-		</View>
-	);
-};
+// export const FileInputGroup = ({ style, ...props }) => {
+// 	const { inputLabel, value } = props;
+// 	return (
+// 		<View>
+// 			{inputLabel && <Text style={customStyles.label}>{inputLabel}</Text>}
+// 			<Text style={[customStyles.inputTextRead, style]} {...props}>
+// 				{value}
+// 			</Text>
+// 		</View>
+// 	);
+// };
 
 // textarea
 export const TextareaInputGroup = ({
 	style,
 	label,
 	name,
+	error,
 	handleInputForm,
 	...props
 }) => {
 	return (
 		<View>
-			{label && <Text style={styles.labelTop}>{label}</Text>}
+			{label && (
+				<Text style={styles.labelTop}>
+					{label}{' '}
+					{error && (
+						<Text style={{ color: 'red', fontWeight: 'normal' }}>{error}</Text>
+					)}
+				</Text>
+			)}
 			<TextInput
-				style={[styles.textareaInput, style]}
+				style={[styles.textareaInput, style, error && styles.inputTextError]}
 				{...props}
 				onChangeText={(value) => handleInputForm(value, name)}
 			/>
@@ -67,6 +75,7 @@ export const TextInputGroupReadonly = ({
 	label,
 	name,
 	value,
+	error,
 	...props
 }) => {
 	return (
@@ -80,28 +89,76 @@ export const TextInputGroupReadonly = ({
 };
 
 export const TextInputGroup = ({
+	mask = false,
 	style,
 	label,
 	name,
+	error,
 	handleInputForm,
 	...props
 }) => {
+	const handleMaskText = (value, name) => {
+		let currentVal = value;
+
+		if (mask === 'PHONE') {
+			currentVal = currentVal.replace(/\D/g, ''); //Remove tudo o que não é dígito
+			currentVal = currentVal.replace(/^(\d\d)(\d)/g, '($1) $2'); //Coloca parênteses em volta dos dois primeiros dígitos
+
+			// check digit 9
+			if (currentVal.length > 13) {
+				currentVal = currentVal.replace(/(\d{5})(\d)/, '$1-$2'); //Coloca hífen entre o quarto e o quinto dígitos
+			} else {
+				currentVal = currentVal.replace(/(\d{4})(\d)/, '$1-$2'); //Coloca hífen entre o quarto e o quinto dígitos
+			}
+		}
+
+		if (mask === 'CEP') {
+			currentVal = currentVal.replace(/\D/g, ''); //Remove tudo o que não é dígito
+			currentVal = currentVal.replace(/^(\d{5})(\d)/, '$1-$2'); //Esse é tão fácil que não merece explicações
+		}
+
+		if (mask === 'CPF') {
+			currentVal = currentVal.replace(/\D/g, ''); //Remove tudo o que não é dígito
+			currentVal = currentVal.replace(/(\d{3})(\d)/, '$1.$2'); //Coloca um ponto entre o terceiro e o quarto dígitos
+			currentVal = currentVal.replace(/(\d{3})(\d)/, '$1.$2'); //Coloca um ponto entre o terceiro e o quarto dígitos
+			//de novo (para o segundo bloco de números)
+			currentVal = currentVal.replace(/(\d{3})(\d{1,2})$/, '$1-$2'); //Coloca um hífen entre o terceiro e o quarto dígitos
+		}
+
+		handleInputForm(currentVal, name);
+	};
+
 	return (
 		<View>
-			{label && <Text style={styles.labelTop}>{label}</Text>}
+			{label && (
+				<Text style={styles.labelTop}>
+					{label}{' '}
+					{error && (
+						<Text style={{ color: 'red', fontWeight: 'normal' }}>{error}</Text>
+					)}
+				</Text>
+			)}
 			<TextInput
-				style={[styles.inputText, style]}
+				style={[styles.inputText, style, error && styles.inputTextError]}
 				{...props}
-				onChangeText={(value) => handleInputForm(value, name)}
+				onChangeText={(value) =>
+					mask ? handleMaskText(value, name) : handleInputForm(value, name)
+				}
 			/>
 		</View>
 	);
 };
 
-export const SwitchInputGroup = ({ label, name, value, handleInputForm }) => {
+export const SwitchInputGroup = ({
+	label,
+	name,
+	value,
+	error,
+	handleInputForm,
+}) => {
 	return (
 		<>
-			<View style={[styles.SwitchInputGroup]}>
+			<View style={[styles.SwitchInputGroup, error && styles.inputTextError]}>
 				<Text style={styles.inlineLabel}>{label}</Text>
 				<Switch
 					trackColor={{ false: '#cdcdcd', true: '#6edc5f' }}
@@ -115,10 +172,18 @@ export const SwitchInputGroup = ({ label, name, value, handleInputForm }) => {
 	);
 };
 
-export const CheckInputGroup = ({ label, name, value, handleInputForm }) => {
+export const CheckInputGroup = ({
+	label,
+	name,
+	value,
+	error,
+	handleInputForm,
+}) => {
 	return (
 		<>
-			<View style={[styles.checkInputGroupWrap]}>
+			<View
+				style={[styles.checkInputGroupWrap, error && styles.inputTextError]}
+			>
 				<Pressable
 					onPress={() => handleInputForm(value, name, true)}
 					style={styles.checkInputGroupTouchable}
@@ -140,11 +205,14 @@ export const RadioInputGroup = ({
 	name,
 	value,
 	group,
+	error,
 	handleInputForm,
 }) => {
 	return (
 		<>
-			<View style={[styles.checkInputGroupWrap]}>
+			<View
+				style={[styles.checkInputGroupWrap, error && styles.inputTextError]}
+			>
 				<Pressable
 					onPress={() => handleInputForm(name, group)}
 					style={styles.checkInputGroupTouchable}
@@ -316,5 +384,10 @@ const styles = StyleSheet.create({
 		paddingTop: 10,
 		paddingBottom: 8,
 		textAlignVertical: 'top', // hack Android
+	},
+	// error
+	inputTextError: {
+		borderWidth: 1,
+		borderColor: 'red',
 	},
 });
