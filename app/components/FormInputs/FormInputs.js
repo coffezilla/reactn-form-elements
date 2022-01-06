@@ -158,6 +158,9 @@ export const SwitchInputGroup = ({
 }) => {
 	return (
 		<>
+			{error && (
+				<Text style={{ color: 'red', fontWeight: 'normal' }}>{error}</Text>
+			)}
 			<View style={[styles.SwitchInputGroup, error && styles.inputTextError]}>
 				<Text style={styles.inlineLabel}>{label}</Text>
 				<Switch
@@ -181,6 +184,9 @@ export const CheckInputGroup = ({
 }) => {
 	return (
 		<>
+			{error && (
+				<Text style={{ color: 'red', fontWeight: 'normal' }}>{error}</Text>
+			)}
 			<View
 				style={[styles.checkInputGroupWrap, error && styles.inputTextError]}
 			>
@@ -210,6 +216,9 @@ export const RadioInputGroup = ({
 }) => {
 	return (
 		<>
+			{error && (
+				<Text style={{ color: 'red', fontWeight: 'normal' }}>{error}</Text>
+			)}
 			<View
 				style={[styles.checkInputGroupWrap, error && styles.inputTextError]}
 			>
