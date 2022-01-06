@@ -100,6 +100,10 @@ export const TextInputGroup = ({
 	const handleMaskText = (value, name) => {
 		let currentVal = value;
 
+		if (mask === 'NUMBER') {
+			currentVal = currentVal.replace(/\D/g, ''); //Remove tudo o que não é dígito
+		}
+
 		if (mask === 'PHONE') {
 			currentVal = currentVal.replace(/\D/g, ''); //Remove tudo o que não é dígito
 			currentVal = currentVal.replace(/^(\d\d)(\d)/g, '($1) $2'); //Coloca parênteses em volta dos dois primeiros dígitos
