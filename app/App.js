@@ -89,11 +89,16 @@ export default function App() {
 						fontSize: 20,
 					}}
 				/>
+
 				<Switch
 					trackColor={{ false: '#cdcdcd', true: '#6edc5f' }}
 					thumbColor={form.mySwitch ? '#fff' : '#fff'}
 					ios_backgroundColor='#cdcdcd'
 					onValueChange={() => handleInputForm(form.mySwitch, 'mySwitch', true)}
+					style={{
+						alignSelf: 'flex-start',
+						backgroundColor: 'orange',
+					}}
 					value={form.mySwitch}
 				/>
 
