@@ -155,6 +155,7 @@ export const TextInputGroup = ({
 
 export const SwitchInputGroup = ({
 	label,
+	labelHeader,
 	name,
 	value,
 	error,
@@ -162,16 +163,21 @@ export const SwitchInputGroup = ({
 }) => {
 	return (
 		<>
-			{error && (
-				<Text style={{ color: 'red', fontWeight: 'normal' }}>{error}</Text>
-			)}
+			<Text style={styles.labelTop}>
+				<>
+					{labelHeader}{' '}
+					{error && (
+						<Text style={{ color: 'red', fontWeight: 'normal' }}>{error}</Text>
+					)}
+				</>
+			</Text>
 			<View style={[styles.SwitchInputGroup, error && styles.inputTextError]}>
 				<Text style={styles.inlineLabel}>{label}</Text>
 				<Switch
 					trackColor={{ false: '#cdcdcd', true: '#6edc5f' }}
 					thumbColor={value ? '#fff' : '#fff'}
 					ios_backgroundColor='#cdcdcd'
-					onValueChange={() => handleInputForm(value, 'mySwitch', true)}
+					onValueChange={() => handleInputForm(value, name, true)}
 					value={value}
 				/>
 			</View>
@@ -181,6 +187,7 @@ export const SwitchInputGroup = ({
 
 export const CheckInputGroup = ({
 	label,
+	labelHeader,
 	name,
 	value,
 	error,
@@ -188,9 +195,13 @@ export const CheckInputGroup = ({
 }) => {
 	return (
 		<>
-			{error && (
-				<Text style={{ color: 'red', fontWeight: 'normal' }}>{error}</Text>
-			)}
+			<Text style={styles.labelTop}>
+				{labelHeader}{' '}
+				{error && (
+					<Text style={{ color: 'red', fontWeight: 'normal' }}>{error}</Text>
+				)}
+			</Text>
+
 			<View
 				style={[styles.checkInputGroupWrap, error && styles.inputTextError]}
 			>
@@ -210,6 +221,23 @@ export const CheckInputGroup = ({
 	);
 };
 
+// group all radios
+export const RadioInputGroupWrapper = ({ label, error, children }) => {
+	return (
+		<View>
+			<Text style={styles.labelTop}>
+				<>
+					{label}{' '}
+					{error && (
+						<Text style={{ color: 'red', fontWeight: 'normal' }}>{error}</Text>
+					)}
+				</>
+			</Text>
+			{children}
+		</View>
+	);
+};
+//
 export const RadioInputGroup = ({
 	label,
 	name,
@@ -220,9 +248,6 @@ export const RadioInputGroup = ({
 }) => {
 	return (
 		<>
-			{error && (
-				<Text style={{ color: 'red', fontWeight: 'normal' }}>{error}</Text>
-			)}
 			<View
 				style={[styles.checkInputGroupWrap, error && styles.inputTextError]}
 			>

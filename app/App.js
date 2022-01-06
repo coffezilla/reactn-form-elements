@@ -21,6 +21,7 @@ import {
 	CheckInput,
 	CheckInputGroup,
 	RadioInputGroup,
+	RadioInputGroupWrapper,
 	SwitchInputGroup,
 	TextInputGroup,
 	TextInputGroupReadonly,
@@ -110,23 +111,25 @@ export default function App() {
 				</View>
 
 				<View style={styles.division}>
-					<Text>RadioInputGroup: colors</Text>
-					<RadioInputGroup
-						label='Female'
-						name='F'
-						error='Required'
-						group='genre'
-						value={form.genre}
-						handleInputForm={handleInputForm}
-					/>
-					<RadioInputGroup
-						label='Male'
-						name='M'
-						group='genre'
-						error='Required'
-						value={form.genre}
-						handleInputForm={handleInputForm}
-					/>
+					<Text>Genre</Text>
+					<RadioInputGroupWrapper label='Choose genre' error='Required'>
+						<RadioInputGroup
+							label='Female'
+							name='F'
+							error='Required'
+							group='genre'
+							value={form.genre}
+							handleInputForm={handleInputForm}
+						/>
+						<RadioInputGroup
+							label='Male'
+							name='M'
+							group='genre'
+							error='Required'
+							value={form.genre}
+							handleInputForm={handleInputForm}
+						/>
+					</RadioInputGroupWrapper>
 				</View>
 
 				<View style={styles.division}>
