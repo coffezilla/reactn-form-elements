@@ -11,15 +11,38 @@ import {
 	Pressable,
 	Switch,
 	SafeAreaView,
+	ScrollView,
 } from 'react-native';
 import { useState } from 'react';
 
-import { RadioInput, CheckInput } from './components/FormInputs';
+//
+import {
+	RadioInput,
+	CheckInput,
+	CheckInputGroup,
+	RadioInputGroup,
+	SwitchInputGroup,
+	TextInputGroup,
+	TextInputGroupReadonly,
+	TextareaInputGroup,
+} from './components/FormInputs';
 
 export default function App() {
 	const [form, setForm] = useState({
-		name: 'Foo Soo',
-		genre: 'M',
+		isSigned: false,
+		colors: 'red',
+		agree: false,
+		notification: false,
+		genre: 'm',
+		password: '',
+		passwordConfirm: '',
+		name: '',
+		email: '',
+		phone: '',
+		message: '',
+		file: '',
+		saved: 'my app v10.00',
+
 		checked: true,
 		mySwitch: false,
 	});
@@ -36,76 +59,140 @@ export default function App() {
 	};
 
 	return (
-		<View style={styles.container}>
-			<Text>temos a ideia sim</Text>
+		<ScrollView style={styles.container}>
+			<Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 7 }}>
+				Inputs sample
+			</Text>
+
 			<View>
-				<Pressable
-					onPress={() => handleInputForm(form.checked, 'checked', true)}
-					style={{
-						backgroundColor: '#ccc',
-						height: 40,
-						justifyContent: 'flex-start',
-						flexDirection: 'row',
-						alignItems: 'center',
-					}}
-				>
-					<CheckInput value={form.checked} style={{ marginRight: 7 }} />
-					<Text>Checkbox Checked</Text>
-				</Pressable>
+				<View style={styles.division}>
+					<Text>CheckInput: isSigned</Text>
+					<CheckInput
+						value={form.checked}
+						style={{ marginRight: 7 }}
+						onPress={() => handleInputForm(form.checked, 'checked', true)}
+					/>
+				</View>
 
-				<Pressable
-					onPress={() => handleInputForm('F', 'genre')}
-					style={{
-						backgroundColor: '#ccc',
-						height: 40,
-						justifyContent: 'flex-start',
-						flexDirection: 'row',
-						alignItems: 'center',
-					}}
-				>
-					<RadioInput value={form.genre} name='F' style={{ marginRight: 7 }} />
-					<Text>Radio F</Text>
-				</Pressable>
+				<View style={styles.division}>
+					<Text>RadioInput: colors</Text>
+					<RadioInput
+						value={form.colors}
+						name='blue'
+						style={{ marginRight: 7, marginBottom: 7 }}
+						onPress={() => handleInputForm('blue', 'colors')}
+					/>
+					<RadioInput
+						value={form.colors}
+						name='red'
+						style={{ marginRight: 7, marginBottom: 7 }}
+						onPress={() => handleInputForm('red', 'colors')}
+					/>
+					<RadioInput
+						value={form.colors}
+						name='yellow'
+						style={{ marginRight: 7, marginBottom: 7 }}
+						onPress={() => handleInputForm('yellow', 'colors')}
+					/>
+				</View>
 
-				<Pressable
-					onPress={() => handleInputForm('M', 'genre')}
-					style={{
-						backgroundColor: '#ccc',
-						height: 40,
-						justifyContent: 'flex-start',
-						flexDirection: 'row',
-						alignItems: 'center',
-					}}
-				>
-					<RadioInput value={form.genre} name='M' style={{ marginRight: 7 }} />
-					<Text>Radio M</Text>
-				</Pressable>
+				<View style={styles.division}>
+					<Text>CheckInputGroup: colors</Text>
+					<CheckInputGroup
+						label='Agree'
+						name='checked'
+						value={form.checked}
+						handleInputForm={handleInputForm}
+					/>
+				</View>
 
-				<TextInput
-					value={form.name}
-					onChangeText={(text) => handleInputForm(text, 'name')}
-					style={{
-						borderWidth: 1,
-						fontSize: 20,
-					}}
-				/>
+				<View style={styles.division}>
+					<Text>RadioInputGroup: colors</Text>
+					<RadioInputGroup
+						label='Female'
+						name='F'
+						group='genre'
+						value={form.genre}
+						handleInputForm={handleInputForm}
+					/>
+					<RadioInputGroup
+						label='Male'
+						name='M'
+						group='genre'
+						value={form.genre}
+						handleInputForm={handleInputForm}
+					/>
+				</View>
 
-				<Switch
-					trackColor={{ false: '#cdcdcd', true: '#6edc5f' }}
-					thumbColor={form.mySwitch ? '#fff' : '#fff'}
-					ios_backgroundColor='#cdcdcd'
-					onValueChange={() => handleInputForm(form.mySwitch, 'mySwitch', true)}
-					style={{
-						alignSelf: 'flex-start',
-						backgroundColor: 'orange',
-					}}
-					value={form.mySwitch}
-				/>
+				<View style={styles.division}>
+					<SwitchInputGroup
+						value={form.mySwitch}
+						label='Switch'
+						name='mySwitch'
+						handleInputForm={handleInputForm}
+					/>
+				</View>
+
+				<View style={styles.division}>
+					<TextInputGroup
+						label='Nome'
+						placeholder='Ex.: Carl John'
+						name='name'
+						handleInputForm={handleInputForm}
+						keyboardType='default'
+						value={form.name}
+					/>
+
+					<TextInputGroup
+						label='E-mail'
+						placeholder='Ex.: my@email.com'
+						name='email'
+						handleInputForm={handleInputForm}
+						keyboardType='email-address'
+						autoCapitalize='none'
+						value={form.email}
+					/>
+
+					<TextInputGroup
+						label='Senha'
+						name='password'
+						placeholder='******'
+						secureTextEntry={true}
+						handleInputForm={handleInputForm}
+						value={form.password}
+					/>
+
+					<TextInputGroupReadonly
+						label='Só leitura'
+						name='saved'
+						value={form.saved}
+					/>
+
+					<TextInputGroup
+						label='Phone'
+						placeholder='(00) 0000-0000'
+						handleInputForm={handleInputForm}
+						keyboardType='numeric'
+						maxLength={12}
+						name='phone'
+						value={form.phone}
+					/>
+
+					<TextareaInputGroup
+						label='Mensagem'
+						placeholder='This is...'
+						name='message'
+						multiline={true}
+						handleInputForm={handleInputForm}
+						keyboardType='default'
+						value={form.message}
+					/>
+				</View>
 
 				<Text>{JSON.stringify(form, null, 1)}</Text>
 			</View>
 			<StatusBar style='auto' />
-		</View>
+		</ScrollView>
 	);
 }
 
@@ -115,6 +202,9 @@ const styles = StyleSheet.create({
 		marginTop: 23,
 		paddingHorizontal: 17,
 		paddingVertical: 10,
-		backgroundColor: '#eee',
+		backgroundColor: '#fff',
+	},
+	division: {
+		marginBottom: 10,
 	},
 });
