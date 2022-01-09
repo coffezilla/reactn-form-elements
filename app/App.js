@@ -51,13 +51,14 @@ export default function App() {
 	});
 
 	// handle of RadioInput, CheckInput,switch and vanilla TextInput
-	const handleInputForm = (text, name, switcher = false) => {
+	const handleInputForm = (text, name, params = {}, switcher = false) => {
 		if (switcher) {
 			text = !text;
 		}
 		setForm({
 			...form,
 			[name]: text,
+			error: '',
 		});
 	};
 
@@ -73,6 +74,7 @@ export default function App() {
 					<CheckInput
 						value={form.checked}
 						style={{ marginRight: 7 }}
+						darkTheme
 						onPress={() => handleInputForm(form.checked, 'checked', true)}
 					/>
 				</View>
@@ -83,18 +85,21 @@ export default function App() {
 						value={form.colors}
 						name='blue'
 						style={{ marginRight: 7, marginBottom: 7 }}
+						darkTheme
 						onPress={() => handleInputForm('blue', 'colors')}
 					/>
 					<RadioInput
 						value={form.colors}
 						name='red'
 						style={{ marginRight: 7, marginBottom: 7 }}
+						darkTheme
 						onPress={() => handleInputForm('red', 'colors')}
 					/>
 					<RadioInput
 						value={form.colors}
 						name='yellow'
 						style={{ marginRight: 7, marginBottom: 7 }}
+						darkTheme
 						onPress={() => handleInputForm('yellow', 'colors')}
 					/>
 				</View>
@@ -103,8 +108,9 @@ export default function App() {
 					<Text>CheckInputGroup: colors</Text>
 					<CheckInputGroup
 						label='Agree'
+						darkTheme
 						name='checked'
-						error='Required'
+						error=''
 						value={form.checked}
 						handleInputForm={handleInputForm}
 					/>
@@ -112,11 +118,12 @@ export default function App() {
 
 				<View style={styles.division}>
 					<Text>Genre</Text>
-					<RadioInputGroupWrapper label='Choose genre' error='Required'>
+					<RadioInputGroupWrapper label='Choose genre' error='' darkTheme>
 						<RadioInputGroup
 							label='Female'
 							name='F'
-							error='Required'
+							darkTheme
+							error=''
 							group='genre'
 							value={form.genre}
 							handleInputForm={handleInputForm}
@@ -124,8 +131,9 @@ export default function App() {
 						<RadioInputGroup
 							label='Male'
 							name='M'
+							darkTheme
 							group='genre'
-							error='Required'
+							error=''
 							value={form.genre}
 							handleInputForm={handleInputForm}
 						/>
@@ -136,8 +144,9 @@ export default function App() {
 					<SwitchInputGroup
 						value={form.mySwitch}
 						label='Switch'
+						darkTheme
 						name='mySwitch'
-						error='Required'
+						error=''
 						handleInputForm={handleInputForm}
 					/>
 				</View>
@@ -147,7 +156,8 @@ export default function App() {
 						label='Nome'
 						placeholder='Ex.: Carl John'
 						name='name'
-						error='Required'
+						darkTheme
+						error=''
 						handleInputForm={handleInputForm}
 						keyboardType='default'
 						value={form.name}
@@ -157,7 +167,8 @@ export default function App() {
 						label='E-mail'
 						placeholder='Ex.: my@email.com'
 						name='email'
-						error='Required'
+						darkTheme
+						error=''
 						handleInputForm={handleInputForm}
 						keyboardType='email-address'
 						autoCapitalize='none'
@@ -167,7 +178,8 @@ export default function App() {
 					<TextInputGroup
 						label='Senha'
 						name='password'
-						error='Required'
+						error=''
+						darkTheme
 						placeholder='******'
 						secureTextEntry={true}
 						handleInputForm={handleInputForm}
@@ -177,14 +189,16 @@ export default function App() {
 					<TextInputGroupReadonly
 						label='Só leitura'
 						name='saved'
+						darkTheme
 						value={form.saved}
 					/>
 
 					<TextInputGroup
 						label='Phone'
 						mask='PHONE'
-						error='Required'
+						error=''
 						placeholder='(00) 0000-0000'
+						darkTheme
 						handleInputForm={handleInputForm}
 						keyboardType='numeric'
 						maxLength={15}
@@ -195,8 +209,9 @@ export default function App() {
 					<TextInputGroup
 						label='Cep'
 						mask='CEP'
-						error='Required'
+						error=''
 						placeholder='00000-000'
+						darkTheme
 						handleInputForm={handleInputForm}
 						keyboardType='numeric'
 						maxLength={9}
@@ -207,8 +222,9 @@ export default function App() {
 					<TextInputGroup
 						label='Cpf'
 						mask='CPF'
-						error='Required'
+						error=''
 						placeholder='000.000.000-00'
+						darkTheme
 						handleInputForm={handleInputForm}
 						keyboardType='numeric'
 						maxLength={14}
@@ -219,8 +235,9 @@ export default function App() {
 					<TextareaInputGroup
 						label='Mensagem'
 						placeholder='This is...'
+						darkTheme
 						name='message'
-						error='Required'
+						error=''
 						multiline={true}
 						handleInputForm={handleInputForm}
 						keyboardType='default'
@@ -241,7 +258,7 @@ const styles = StyleSheet.create({
 		marginTop: 23,
 		paddingHorizontal: 17,
 		paddingVertical: 10,
-		backgroundColor: '#fff',
+		backgroundColor: '#3D3D3D',
 	},
 	division: {
 		marginBottom: 10,
