@@ -437,6 +437,7 @@ export const RadioInputGroup = ({
 	handleInputForm,
 	darkTheme = false,
 	params = {},
+	style,
 }) => {
 	return (
 		<>
@@ -448,12 +449,13 @@ export const RadioInputGroup = ({
 							? formStylesColors.dark.backgroundWrap
 							: formStylesColors.default.backgroundWrap,
 					},
+					style,
 					error && formStyles.inputTextError,
 				]}
 			>
 				<Pressable
 					onPress={() => handleInputForm(name, group, params)}
-					style={[formStyles.checkInputGroupTouchable, {}]}
+					style={[formStyles.checkInputGroupTouchable]}
 				>
 					<RadioInput
 						value={value}

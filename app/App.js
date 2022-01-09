@@ -125,6 +125,7 @@ export default function App() {
 							darkTheme
 							error=''
 							group='genre'
+							style={{ marginBottom: 3 }}
 							value={form.genre}
 							handleInputForm={handleInputForm}
 						/>
